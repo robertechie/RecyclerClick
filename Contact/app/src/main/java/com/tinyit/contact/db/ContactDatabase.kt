@@ -28,7 +28,6 @@ abstract class ContactDatabase : RoomDatabase() {
                 )
                     .allowMainThreadQueries().build()
             }
-
             return INSTANCE
         }
 
