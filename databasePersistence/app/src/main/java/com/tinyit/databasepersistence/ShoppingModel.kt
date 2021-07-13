@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey
 data class ShoppingModel(
     val category:String,
     val description:String,
+
     @PrimaryKey(autoGenerate = true)
-    val uid: Int =0,
+    val uid: Int = 0
+
+
 )

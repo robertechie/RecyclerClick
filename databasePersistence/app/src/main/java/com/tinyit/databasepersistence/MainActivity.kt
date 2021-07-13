@@ -2,6 +2,9 @@ package com.tinyit.databasepersistence
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.tinyit.databasepersistence.databinding.ActivityMainBinding
 
@@ -14,32 +17,26 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        myShoppingList = mutableListOf()
-        adapt = TodoAdapter(myShoppingList)
-        binding.recyclerView.adapter = adapt
+        val viewMode=ViewModelProvider(this)[ShoppingViewModel::class.java]
 
-        val  db= Room.databaseBuilder(
+        val  db= Room.databaseBuilder<ShoppingDatabase>(
             applicationContext,
-            ShoppingDatabase::class.java, "shopping-database"
-        ).build()
+            ShoppingDatabase::class.java, "ShoppingDatabase"
+        ).allowMainThreadQueries().build()
 
-        val shoppingD = db.shoppoingDAO()
-        myShoppingList = shoppingD.getAllShoppingItems().toMutableList()
-        adapt.notifyDataSetChanged()
-
-
+        val shoppingD = db.shoppingDao()
+        viewMode.getAllShoppingItem(db).observe(this, Observer {
+            adapt = TodoAdapter(it)
+            binding.recyclerView.adapter = adapt
+            adapt.notifyDataSetChanged()
+        })
 
 
         binding.btnAdd.setOnClickListener {
-            val category:String = binding.txtTitle.text.toString()
-            val     description:String = binding.txtDes.text.toString()
-            val shoppingItem = ShoppingModel(
-                category, description
-            )
-
-            shoppingD.addShoppingItem(shoppingItem)
-
-            myShoppingList.add(shoppingItem)
+            var  category:String = binding.txtTitle.text.toString()
+            var description:String = binding.txtDes.text.toString()
+            val shoppingItem = ShoppingModel(category, description,0)
+            viewMode.addShopping(shoppingItem, db)
             adapt.notifyDataSetChanged()
         }
 

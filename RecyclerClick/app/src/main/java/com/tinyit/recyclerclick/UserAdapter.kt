@@ -20,10 +20,6 @@ class UserAdapter(public var context: Context, var User:List<UserProfile>):Recyc
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         var user = User.get(position)
         holder.bind(user)
-
-
-
-
     }
     override fun getItemCount(): Int {
         return User.size
@@ -44,11 +40,7 @@ class UserAdapter(public var context: Context, var User:List<UserProfile>):Recyc
                     i.putExtra("surName",userProfile.surName)
                     i.putExtra("lastName",userProfile.otherName)
                     i.putExtra("img", userProfile.img)
-
                     context.startActivity(i)
-
-
-
 
                 }
             })

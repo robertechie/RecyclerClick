@@ -1,19 +1,16 @@
 package com.tinyit.databasepersistence
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface ShoppingDAO {
     @Insert
-    fun addShoppingItem(shoppingItem: ShoppingModel){
-
+    fun addShoppingItem(ShoppingItem: ShoppingModel){
     }
 
     @Query("SELECT * FROM ShoppingModel")
-    fun getAllShoppingItems():List<ShoppingModel>
+    fun getAllShoppingItems():LiveData<List<ShoppingModel>>
 
     @Delete
     fun delete(shoppingItem: ShoppingModel)
