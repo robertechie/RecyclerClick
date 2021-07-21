@@ -1,8 +1,9 @@
+package com.tinyit.retrofit
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tinyit.retrofit.TodoModel
 import com.tinyit.retrofit.databinding.TodoItemBinding
 
 class TodoAdapter(var listitem:List<TodoModel>):RecyclerView.Adapter<TodoAdapter.ViewHolder>() {
